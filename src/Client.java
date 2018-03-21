@@ -13,15 +13,12 @@ public class Client {
 		
 		try {
 			client = new Socket(ip, port);
-			while (true) {
+			System.out.println("Connecting Server");
+			System.out.println("Connected Server");
 
-				System.out.println("Connecting Server");
-				
-				System.out.println("Connected Server");
-				
-				InputStream in = client.getInputStream();
-				OutputStream out = client.getOutputStream();
-				
+			InputStream in = client.getInputStream();
+			OutputStream out = client.getOutputStream();
+			while (true) {
 				System.out.println("Enter the Msg to Server");
 				String msg = scanner.nextLine();
 				out.write(msg.getBytes());
@@ -29,8 +26,6 @@ public class Client {
 				byte arr[] = new byte[100];
 				in.read(arr);
 				System.out.println("Client's Msg: "+new String(arr));
-
-				System.out.println("Bye Server");
 				if(false) {
 					break;
 				}

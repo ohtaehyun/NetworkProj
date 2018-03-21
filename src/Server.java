@@ -12,21 +12,20 @@ public class Server {
 			server = new ServerSocket(port);
 			System.out.println("server is ready");
 
-			System.out.println("ready for client");
+			System.out.println("wait for client");
 			client = server.accept();
+			System.out.println("client is ready");
+
+			InputStream in = client.getInputStream();
+			OutputStream out = client.getOutputStream();
 			while(true) {
-				System.out.println("client is ready");
-				InputStream in = client.getInputStream();
-				OutputStream out = client.getOutputStream();
 				byte arr[] = new byte[100];
 				in.read(arr);
-				System.out.println("Hello Client");
-				System.out.println("Client's Msg: "+new String(arr));
-				
-				System.out.println("Enter the Msg:");
+				System.out.println("Client's Msg : "+new String(arr));
+				System.out.println("Enter the Msg to Client :");
 				String msg = scanner.nextLine();
 				out.write(msg.getBytes());
-				System.out.println("Client Out");
+				System.out.println("Msg sent");
 			}
 		}catch (Exception e) {
 			// TODO: handle exception
