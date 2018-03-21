@@ -25,7 +25,7 @@ public class Client {
 				System.out.println("Sent Msg");
 				byte arr[] = new byte[100];
 				in.read(arr);
-				System.out.println("Client's Msg: "+new String(arr));
+				System.out.println("Server's Msg: "+new String(arr));
 				if(false) {
 					break;
 				}
