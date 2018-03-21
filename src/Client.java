@@ -10,11 +10,13 @@ public class Client {
 		String ip = "127.0.0.1";
 		int port = 10002;
 		Scanner scanner = new Scanner(System.in);
+		
 		try {
+			client = new Socket(ip, port);
 			while (true) {
 
 				System.out.println("Connecting Server");
-				client = new Socket(ip, port);
+				
 				System.out.println("Connected Server");
 				
 				InputStream in = client.getInputStream();
@@ -24,14 +26,20 @@ public class Client {
 				String msg = scanner.nextLine();
 				out.write(msg.getBytes());
 				System.out.println("Sent Msg");
-				client.close();
+				byte arr[] = new byte[100];
+				in.read(arr);
+				System.out.println("Client's Msg: "+new String(arr));
+
 				System.out.println("Bye Server");
+				if(false) {
+					break;
+				}
 			}
+			client.close();
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println(e.getMessage());
 		}finally {
-			
 		}
 
 	}
