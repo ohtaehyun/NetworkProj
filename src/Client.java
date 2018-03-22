@@ -1,36 +1,44 @@
+import java.io.BufferedReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
 public class Client {
 
 	public static void main(String[] args) {
-		Socket client = null;
+		Socket server = null;
+		
+		//local host 임시로 나에게 돌아오는 ip를 사용
 		String ip = "127.0.0.1";
+		
+		//임의의 port 넘버
 		int port = 10002;
-		Scanner scanner = new Scanner(System.in);
+		
+		BufferedReader brForKeyboard;
+		PrintWriter printWriter;
+		BufferedReader brForServer;
 		
 		try {
-			client = new Socket(ip, port);
-			System.out.println("Connecting Server");
-			System.out.println("Connected Server");
+			server = new Socket(ip, port);
+			brForKeyboard = new BufferedReader(new InputStreamReader(System.in));
+			printWriter = new PrintWriter(server.getOutputStream());
+			brForServer = new BufferedReader(new InputStreamReader(server.getInputStream()));
 
-			InputStream in = client.getInputStream();
-			OutputStream out = client.getOutputStream();
 			while (true) {
 				System.out.println("Enter the Msg to Server");
-				String msg = scanner.nextLine();
-				out.write(msg.getBytes());
+				String msg = brForKeyboard.readLine();
+				printWriter.write(msg);
 				System.out.println("Sent Msg");
-				byte arr[] = new byte[100];
-				in.read(arr);
-				System.out.println("Server's Msg: "+new String(arr));
-				if(false) {
+				if(msg.equals("exit")) {
+					System.out.println("logout");
 					break;
 				}
+				
 			}
-			client.close();
+			server.close();
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println(e.getMessage());
